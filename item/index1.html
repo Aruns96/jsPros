@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+</head>
+<body>
+<form onsubmit="saveToLocal(event)" >
+  <label for="price">Selling Price</label>
+  <input type="number" id="price" name="price">
+  <label for="name">Product Name</label>
+  <input type="text" id ="name" name="name">
+  <label for="product">Type of Product</label>
+  <select name="product" id="product" >
+    <option value="electronics">electronics</option>
+    <option value="food">food</option>
+    <option value="skincare">skincare</option>
+    
+  </select>
+  
+  <button >Add product </button>
+</form>
+<h2>Products</h2>
+<h3>Electronics</h3>
+<ul id="eleItems"></ul>
+<h3>Food</h3>
+<ul id="foodItems"></ul>
+<h3>Skincare</h3>
+<ul id="skinItems"></ul>
+
+
+
+
+ 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+ <script >
+   function saveToLocal(event){
+
+            event.preventDefault();
+
+            const price = event.target.price.value;
+            const name = event.target.name.value;
+            const product = event.target.product.value;
+            
+
+          const obj = {
+            price,
+            name,
+            product
+          }
+
+          
+            axios.post("https://crudcrud.com/api/561ad2b4848b4faa83556cfa24b5e1e6/productData" ,{obj})
+            .then(res =>{
+                showItems(obj);
+                console.log(res);
+
+               
+            })
+            .catch(e => console.log(e))
+
+            
+            
+
+
+   }
+   function showItems(pro){
+
+    
+          document.getElementById("price").value = "";
+          document.getElementById("name").value = "";
+          document.getElementById("product").value = "";
+
+
+         
+
+
+          if(pro.product == "electronics"){
+            const parentElement = document.getElementById("eleItems");
+          const chidElemetn = document.createElement("li");
+
+              chidElemetn.textContent = `${pro.price}-${pro.name}`;
+         
+          const deleteButton = document.createElement("input");
+          deleteButton.type = "button";
+          deleteButton.value = "delete";
+          deleteButton.onclick = ()=>{
+          const delId = pro._id;
+          axios.delete(`https://crudcrud.com/api/561ad2b4848b4faa83556cfa24b5e1e6/productData/${delId}`).then(res=>{
+            for(let i=0; i< res.data.length ;i++){
+                  showItems(res.data[i]);
+                }
+              console.log(res.data);
+              
+
+          })
+          
+              
+              
+          
+          parentElement.removeChild(chidElemetn)
+          }
+         
+          
+          chidElemetn.appendChild(deleteButton);
+          
+          parentElement.appendChild(chidElemetn);
+          
+          }
+          
+
+           if (pro.product == "food"){
+            const parentElement = document.getElementById("foodItems");
+          const chidElemetn = document.createElement("li");
+
+              chidElemetn.textContent = `${pro.price}-${pro.name}`;
+         
+          const deleteButton = document.createElement("input");
+          deleteButton.type = "button";
+          deleteButton.value = "delete";
+          deleteButton.onclick = ()=>{
+          const delId = pro._id;
+          axios.delete(`https://crudcrud.com/api/561ad2b4848b4faa83556cfa24b5e1e6/productData/${delId}`).then(res=>{
+            for(let i=0; i< res.data.length ;i++){
+                  showItems(res.data[i]);
+                }
+              console.log(res.data);
+              
+
+          })
+          
+              
+              
+          
+          parentElement.removeChild(chidElemetn)
+          }
+         
+          
+          chidElemetn.appendChild(deleteButton);
+          
+          parentElement.appendChild(chidElemetn);
+          }
+
+         
+          if(pro.product == "skincare"){
+            const parentElement = document.getElementById("skinItems");
+          const chidElemetn = document.createElement("li");
+
+              chidElemetn.textContent = `${pro.price}-${pro.name}`;
+         
+          const deleteButton = document.createElement("input");
+          deleteButton.type = "button";
+          deleteButton.value = "delete";
+          deleteButton.onclick = ()=>{
+          const delId = pro._id;
+          axios.delete(`https://crudcrud.com/api/561ad2b4848b4faa83556cfa24b5e1e6/productData/${delId}`).then(res=>{
+            for(let i=0; i< res.data.length ;i++){
+                  showItems(res.data[i]);
+                }
+              console.log(res.data);
+              
+
+          })
+          
+              
+              
+          
+          parentElement.removeChild(chidElemetn)
+          }
+         
+          
+          chidElemetn.appendChild(deleteButton);
+          
+          parentElement.appendChild(chidElemetn);
+          }
+          
+         
+          
+          }
+
+
+
+function showItemWithId(pro){
+                                document.getElementById("price").value = "";
+                            document.getElementById("name").value = "";
+                            document.getElementById("product").value = "";
+
+
+                            if(pro.obj.product == "electronics"){
+                                const parentElement = document.getElementById("eleItems");
+                            const chidElemetn = document.createElement("li");
+
+                                chidElemetn.textContent = `${pro.obj.price}-${pro.obj.name}`;
+                            
+                            const deleteButton = document.createElement("input");
+                            deleteButton.type = "button";
+                            deleteButton.value = "delete";
+                            deleteButton.onclick = ()=>{
+                            const delId = pro._id;
+                            axios.delete(`https://crudcrud.com/api/561ad2b4848b4faa83556cfa24b5e1e6/productData/${delId}`).then(res=>{
+                                for(let i=0; i< res.data.length ;i++){
+                                    showItems(res.data[i]);
+                                    }
+                                console.log(res.data);
+                                
+
+                            })
+                            
+                                
+                                
+                            
+                            parentElement.removeChild(chidElemetn)
+                            }
+                            
+                            
+                            chidElemetn.appendChild(deleteButton);
+                            
+                            parentElement.appendChild(chidElemetn);
+                            }
+
+
+                            
+                            if(pro.obj.product == "food"){
+                                const parentElement = document.getElementById("foodItems");
+                            const chidElemetn = document.createElement("li");
+
+                                chidElemetn.textContent = `${pro.obj.price}-${pro.obj.name}`;
+                            
+                            const deleteButton = document.createElement("input");
+                            deleteButton.type = "button";
+                            deleteButton.value = "delete";
+                            deleteButton.onclick = ()=>{
+                            const delId = pro._id;
+                            axios.delete(`https://crudcrud.com/api/561ad2b4848b4faa83556cfa24b5e1e6/productData/${delId}`).then(res=>{
+                                for(let i=0; i< res.data.length ;i++){
+                                    showItems(res.data[i]);
+                                    }
+                                console.log(res.data);
+                                
+
+                            })
+                            
+                                
+                                
+                            
+                            parentElement.removeChild(chidElemetn)
+                            }
+                            
+                            
+                            chidElemetn.appendChild(deleteButton);
+                            
+                            parentElement.appendChild(chidElemetn);
+                            }
+
+                            
+
+                            if(pro.obj.product == "skincare"){
+                                const parentElement = document.getElementById("skinItems");
+                            const chidElemetn = document.createElement("li");
+
+                                chidElemetn.textContent = `${pro.obj.price}-${pro.obj.name}`;
+                            
+                            const deleteButton = document.createElement("input");
+                            deleteButton.type = "button";
+                            deleteButton.value = "delete";
+                            deleteButton.onclick = ()=>{
+                            const delId = pro._id;
+                            axios.delete(`https://crudcrud.com/api/561ad2b4848b4faa83556cfa24b5e1e6/productData/${delId}`).then(res=>{
+                                for(let i=0; i< res.data.length ;i++){
+                                    showItems(res.data[i]);
+                                    }
+                                console.log(res.data);
+                                
+
+                            })
+                            
+                                
+                                
+                            
+                            parentElement.removeChild(chidElemetn)
+                            }
+                            
+                            
+                            chidElemetn.appendChild(deleteButton);
+                            
+                            parentElement.appendChild(chidElemetn);
+                            }
+
+          
+          
+          }
+
+
+             
+
+    
+        
+
+document.addEventListener("DOMContentLoaded",()=>{
+    axios.get("https://crudcrud.com/api/561ad2b4848b4faa83556cfa24b5e1e6/productData").then(res =>{
+       for(let i=0; i< res.data.length ;i++){
+        showItemWithId(res.data[i]);
+
+       }
+       console.log(res.data)
+      
+    })
+    .catch(e=>console.log(e))
+})
+ </script> 
+</body>
+</html>
